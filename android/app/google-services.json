@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "807914198701",
+    "project_id": "daily-fitness-f6928",
+    "storage_bucket": "daily-fitness-f6928.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:807914198701:android:6bb0a5ee9b59ddae335824",
+        "android_client_info": {
+          "package_name": "com.example.daily_fitness"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtmeETeukwpGavkSMa3Jv-ohlX1_ID--w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

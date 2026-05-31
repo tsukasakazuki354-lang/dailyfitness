@@ -1,0 +1,7 @@
+<!-- Minimal root AndroidManifest to satisfy some tools. The real app manifest
+     should live under android/app/src/main/AndroidManifest.xml. If you don't
+     have a full Android project, run `flutter create .` to generate platform
+     folders. -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.daily_fitness">
+</manifest>
