@@ -6,13 +6,20 @@ import 'package:flutter/foundation.dart';
 
 class FirebaseService {
   static Future<void> initialize() async {
-    if (kIsWeb) {
-      await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-    } else {
-      await Firebase.initializeApp();
-    }
+    try {
+      if (kIsWeb) {
+        await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+      } else {
+        await Firebase.initializeApp();
+      }
 
-    FirebaseFirestore.instance.settings = const Settings(persistenceEnabled: true);
-    await NotificationService.initialize();
+      if (!kIsWeb) {
+        FirebaseFirestore.instance.settings = const Settings(persistenceEnabled: true);
+      }
+
+      await NotificationService.initialize();
+    } catch (e) {
+      debugPrint('Firebase initialization error: $e');
+    }
   }
 }

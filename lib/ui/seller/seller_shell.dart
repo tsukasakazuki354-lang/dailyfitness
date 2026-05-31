@@ -156,9 +156,10 @@ class _SellerDashboardState extends State<SellerDashboard> {
               label: 'Logout',
               isActive: false,
               isDestructive: true,
-              onTap: () async {
-                await Provider.of<SessionProvider>(context, listen: false).signOut();
-                if (mounted) Navigator.pushReplacementNamed(context, '/login');
+              onTap: () {
+                Provider.of<SessionProvider>(context, listen: false).signOut().then((_) {
+                  if (mounted) Navigator.pushReplacementNamed(context, '/login');
+                });
               },
             ),
           ),
@@ -221,9 +222,10 @@ class _SellerDashboardState extends State<SellerDashboard> {
                 label: 'Logout',
                 isActive: false,
                 isDestructive: true,
-                onTap: () async {
-                  await Provider.of<SessionProvider>(context, listen: false).signOut();
-                  if (mounted) Navigator.pushReplacementNamed(context, '/login');
+                onTap: () {
+                  Provider.of<SessionProvider>(context, listen: false).signOut().then((_) {
+                    if (mounted) Navigator.pushReplacementNamed(context, '/login');
+                  });
                 },
               ),
             ),
