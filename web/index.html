@@ -1,13 +1,37 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Daily Fitness</title>
-    <link rel="manifest" href="manifest.json" />
-    <meta name="theme-color" content="#0F2850" />
-  </head>
-  <body>
-    <script src="main.dart.js" type="application/javascript"></script>
-  </body>
+<head>
+  <base href="$FLUTTER_BASE_HREF">
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="Daily Fitness - Premium Gym Equipment & Supplements">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Daily Fitness">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  <link rel="icon" type="image/png" href="favicon.png"/>
+  <title>Daily Fitness</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0F2850">
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging-compat.js"></script>
+  <script>
+    firebase.initializeApp({
+      apiKey: "AIzaSyBG9q_9CMwEhItiobl2BJj-pNrCFUwqHes",
+      authDomain: "daily-fitness-f6928.firebaseapp.com",
+      projectId: "daily-fitness-f6928",
+      storageBucket: "daily-fitness-f6928.firebasestorage.app",
+      messagingSenderId: "807914198701",
+      appId: "1:807914198701:web:d4b69b0b95d898c1335824",
+      measurementId: "G-Y7KGZ8NF59"
+    });
+  </script>
+</head>
+<body>
+  <script src="flutter_bootstrap.js" async></script>
+</body>
 </html>
