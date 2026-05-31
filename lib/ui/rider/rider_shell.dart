@@ -111,9 +111,8 @@ class _RiderDashboardState extends State<RiderDashboard> {
         Padding(
           padding: const EdgeInsets.fromLTRB(12, 4, 12, 20),
           child: _RiderNavTile(icon: Icons.logout, label: 'Logout', isActive: false, isDestructive: true, onTap: () {
-            Provider.of<SessionProvider>(context, listen: false).signOut().then((_) {
-              if (mounted) Navigator.pushReplacementNamed(context, '/login');
-            });
+            Provider.of<SessionProvider>(context, listen: false).signOut();
+            Navigator.pushReplacementNamed(context, '/login');
           }),
         ),
       ]),
@@ -154,9 +153,8 @@ class _RiderDashboardState extends State<RiderDashboard> {
           Padding(
             padding: const EdgeInsets.fromLTRB(12, 4, 12, 16),
             child: _RiderNavTile(icon: Icons.logout, label: 'Logout', isActive: false, isDestructive: true, onTap: () {
-              Provider.of<SessionProvider>(context, listen: false).signOut().then((_) {
-                if (mounted) Navigator.pushReplacementNamed(context, '/login');
-              });
+              Provider.of<SessionProvider>(context, listen: false).signOut();
+              Navigator.pushReplacementNamed(context, '/login');
             }),
           ),
         ]),

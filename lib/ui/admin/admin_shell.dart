@@ -94,9 +94,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
         Padding(
           padding: const EdgeInsets.fromLTRB(12, 4, 12, 20),
           child: _AdminNavTile(icon: Icons.logout, label: 'Logout', isActive: false, isDestructive: true, onTap: () {
-            Provider.of<SessionProvider>(context, listen: false).signOut().then((_) {
-              if (mounted) Navigator.pushReplacementNamed(context, '/login');
-            });
+            Provider.of<SessionProvider>(context, listen: false).signOut();
+            Navigator.pushReplacementNamed(context, '/login');
           }),
         ),
       ]),
@@ -135,9 +134,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
           Padding(
             padding: const EdgeInsets.fromLTRB(12, 4, 12, 16),
             child: _AdminNavTile(icon: Icons.logout, label: 'Logout', isActive: false, isDestructive: true, onTap: () {
-              Provider.of<SessionProvider>(context, listen: false).signOut().then((_) {
-                if (mounted) Navigator.pushReplacementNamed(context, '/login');
-              });
+              Provider.of<SessionProvider>(context, listen: false).signOut();
+              Navigator.pushReplacementNamed(context, '/login');
             }),
           ),
         ]),

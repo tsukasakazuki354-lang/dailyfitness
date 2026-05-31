@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
@@ -19,21 +20,35 @@ class AuthService {
   }
 
   static Future<UserCredential?> signInWithGoogle() async {
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-    if (googleUser == null) {
-      return null;
+    try {
+      if (kIsWeb) {
+        // On web, use Firebase Auth popup directly
+        final provider = GoogleAuthProvider();
+        provider.addScope('email');
+        provider.addScope('profile');
+        return await _auth.signInWithPopup(provider);
+      } else {
+        // On mobile, use GoogleSignIn package
+        final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+        if (googleUser == null) return null;
+        final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+        final credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
+        return _auth.signInWithCredential(credential);
+      }
+    } catch (e) {
+      debugPrint('Google sign-in error: $e');
+      rethrow;
     }
-    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
-    return _auth.signInWithCredential(credential);
   }
 
   static Future<void> signOut() async {
     await _auth.signOut();
-    await GoogleSignIn().signOut();
+    try {
+      await GoogleSignIn().signOut();
+    } catch (_) {}
   }
 
   static User? get currentUser => _auth.currentUser;

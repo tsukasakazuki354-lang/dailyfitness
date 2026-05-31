@@ -1,7 +1,53 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:daily_fitness/models/app_user.dart';
+import 'package:daily_fitness/services/auth_service.dart';
+import 'package:daily_fitness/services/firestore_service.dart';
 import 'package:flutter/material.dart';
 
-class RegisterPage extends StatelessWidget {
+class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
+
+  @override
+  State<RegisterPage> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  bool _isLoading = false;
+
+  Future<void> _signInWithGoogle() async {
+    setState(() => _isLoading = true);
+    try {
+      final credential = await AuthService.signInWithGoogle();
+      if (credential?.user != null) {
+        final user = credential!.user!;
+        // Check if user already exists in Firestore
+        final doc = await FirestoreService.users().doc(user.uid).get();
+        if (!doc.exists) {
+          // Create new buyer account for Google sign-in
+          final now = Timestamp.now();
+          final appUser = AppUser(
+            uid: user.uid,
+            role: 'buyer',
+            firstName: user.displayName?.split(' ').first ?? '',
+            lastName: user.displayName?.split(' ').skip(1).join(' ') ?? '',
+            username: user.email?.split('@').first ?? '',
+            email: user.email ?? '',
+            phoneNumber: user.phoneNumber ?? '',
+            profileImage: user.photoURL ?? '',
+            status: 'active',
+            createdAt: now,
+            updatedAt: now,
+          );
+          await FirestoreService.createUserProfile(appUser);
+        }
+        if (mounted) Navigator.pushReplacementNamed(context, '/dashboard/buyer');
+      }
+    } catch (e) {
+      if (mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Google sign-in failed: $e')));
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,6 +131,21 @@ class RegisterPage extends StatelessWidget {
                                 child: const Text('Sign in', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: Color(0xFF0F2850))),
                               ),
                             ],
+                          ),
+                          const SizedBox(height: 20),
+                          const Row(children: [Expanded(child: Divider()), Padding(padding: EdgeInsets.symmetric(horizontal: 12), child: Text('or', style: TextStyle(color: Colors.black38, fontSize: 13))), Expanded(child: Divider())]),
+                          const SizedBox(height: 20),
+                          SizedBox(
+                            width: double.infinity,
+                            child: OutlinedButton.icon(
+                              icon: const Text('G', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.red)),
+                              label: const Text('Sign up with Google'),
+                              onPressed: _isLoading ? null : _signInWithGoogle,
+                              style: OutlinedButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(vertical: 14),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                              ),
+                            ),
                           ),
                         ],
                       ),
